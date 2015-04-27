@@ -1,0 +1,16 @@
+alembic==0.7.5.post2
+csvkit==0.9.1
+dataset==0.5.6
+dbf==0.94.3
+jdcal==1.0
+Mako==1.0.1
+MarkupSafe==0.23
+openpyxl==2.2.0b1
+psycopg2==2.6
+python-dateutil==2.2
+python-slugify==0.1.0
+PyYAML==3.11
+six==1.9.0
+SQLAlchemy==0.9.9
+Unidecode==0.4.17
+xlrd==0.9.3
