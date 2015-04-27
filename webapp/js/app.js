@@ -104,16 +104,15 @@ $(function() {
     //JET: compile template for the polling stations list under each section
     var SECCIONES_ESTABLECIMIENTOS_TMPL = _.template($('#secciones-establecimientos-template').html());
 
-    var FEATURE_CLICK_SQL_TMPL = _.template("SELECT p.descripcion, v.vot_id_partido, SUM(votvotospartido) \
+    var FEATURE_CLICK_SQL_TMPL = _.template("SELECT p.descripcion, v.id_partido, SUM(v.votospartido) \
                                               FROM votos_paso_caba_2015 v \
-                                              LEFT OUTER JOIN partidos_paso_caba_2015 p ON p.id = v.vot_id_partido \
-                                              WHERE vot_mescodigomesa >= {{mesa_desde}} \
-                                              AND vot_mescodigomesa <= {{mesa_hasta}} \
-                                              AND vot_depcodigodepartamento = <%- establecimiento.seccion_id %> \
-                                              AND vot_procodigoprovincia = <%- establecimiento.distrito_id %> \
-                                              AND votacion = '<%- votacion %>' \
-                                              GROUP BY vot_id_partido, p.descripcion \
-                                              ORDER BY SUM(votvotospartido) DESC");
+                                              LEFT OUTER JOIN partidos_paso_caba_2015 p ON p.id = v.id_partido \
+                                              WHERE v.id_mesa >= {{mesa_desde}} \
+                                              AND v._id_mesa <= {{mesa_hasta}} \
+                                              AND v.id_comuna = <%- establecimiento.seccion_id %> \
+                                              AND v.id_distrito = <%- establecimiento.distrito_id %> \
+                                              GROUP BY v.id_partido, p.descripcion \
+                                              ORDER BY SUM(v.votospartido) DESC");
     //JET: underscore template function returns a function so we are calling it on the fly
     // we have not compiled this since it is used only once.
     //_.template($('#secciones-template').html())({distritos: DISTRITOS })
@@ -158,7 +157,6 @@ $(function() {
         $('#secciones-container').css('left', '-150px');
         sql.execute(ESTABLECIMIENTOS_SQL_TMPL,
                     {
-                        //TODO: jquery data attributes
                         seccion_id: $(this).data('seccion_id'),
                         distrito_id: $(this).data('distrito_id')
                     })
@@ -195,9 +193,6 @@ $(function() {
             $('#filtro').scrollTop(prevScrollTop);
         }
     }, '#secciones-establecimientos button');
-
-
-
 
 
     var CARTOCSS_TMPL = _.template(' \
@@ -399,7 +394,7 @@ $(function() {
         d[4] = {
             pardenominacion: 'Otros',
             sum: sum_otros,
-            vot_id_partido: 9999,
+            id_partido: 9999,
             pct: (sum_otros / establecimiento_data.positivos) * 100
         };
 
