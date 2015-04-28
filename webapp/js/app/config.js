@@ -37,17 +37,19 @@ define({
     9999: '#aaaaaa'
     },
     carto_layers:{ '2015_caba_paso': null},
-
+    CARTODB_USER: 'lndata',
+    sql: null,
     //JET: Cartodb SQL template
     LAYER_SQL: "SELECT * FROM cache_votos_paso_2015",
     ESTABLECIMIENTOS_SQL_TMPL: "SELECT *, st_asgeojson(the_geom) as g \n \
                                  FROM cache_votos_paso_2015 \n \
-                                 WHERE distrito_id = {{distrito_id}} \n \
-                                 AND seccion_id = {{seccion_id}} \n \
+                                 WHERE id_distrito = {{id_distrito}} \n \
+                                 AND id_seccion = {{id_seccion}} \n \
                                  ORDER BY circuito, nombre",
 
     distritos: null,
     dicc_partidos: null,
+    SECCIONES_ESTABLECIMIENTOS_TMPL: null,
 
     atrib_top: "LaNacion.com — <a href=\"#\" onclick=\"$('#credits').css('visibility', 'visible'); \
                 return false;\" id=\"showcredits\"><strong>Créditos</strong></a>",

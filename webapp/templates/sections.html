@@ -5,7 +5,7 @@
     <h1><span>▸</span> <%- d.provincia %></h1>
     <ul style="display: none;">
       <% _.each(_.sortBy(d.secciones, function(s) { return s.departamento; }), function(s) { %>
-      <li><a href="<%- s.provincia %>/<%- s.departamento %>" data-bounds="<%- JSON.stringify(s.bounds) %>" data-distrito_id="<%- s.provincia %>" data-seccion_id="<%- s.departamento %>"><%- s.nombre %></a></li>
+      <li><a href="<%- s.provincia %>/<%- s.departamento %>" data-bounds="<%- JSON.stringify(s.bounds) %>" data-id_distrito="<%- s.provincia %>" data-id_seccion="<%- s.departamento %>"><%- s.nombre %></a></li>
       <% }); %>
     </ul>
     <% }); %>

@@ -58,8 +58,8 @@ html, body {
   transition: all 0.5s;
 }
 #secciones-menu { float: left; width: 150px;}
-#secciones-escuelas { float: left; width: 150px ; }
-#secciones-escuelas button {
+#secciones-establecimientos { float: left; width: 150px ; }
+#secciones-establecimientos button {
   border: 0; background-color: white; outline: none;
   padding: 0;
   cursor: pointer;
@@ -74,12 +74,12 @@ html, body {
   padding-left: 0;
 }
 
-#secciones-escuelas ul {
+#secciones-establecimientos ul {
   list-style-type: disc;
   padding-left: 13px;
 }
 
-#secciones-escuelas ul li {
+#secciones-establecimientos ul li {
   margin-bottom: 5px;
 }
 

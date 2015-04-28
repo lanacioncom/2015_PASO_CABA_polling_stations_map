@@ -1,19 +1,19 @@
 #establecimientos_paso_2015_caba {
-  marker-opacity: 0.7;
+  marker-opacity: 0.5;
   marker-allow-overlap: true;
-  marker-line-width: 0;
+  marker-line-width: 1;
   marker-line-opacity: 1;
-  [zoom = 6] {
-    marker-width: 5 + ([margin_of_victory] / [sqrt_positivos]) * 1;
+  [zoom = 12] {
+    marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 16;
   <% _.each(_.pairs(colores), function(p) { %>
     [id_partido=<%- p[0] %>] {
       marker-fill: <%- p[1] %>;
-      marker-line-color: <%- p[1] %>;
+      marker-line-color: white;
     }
   <% }); %>
   }
-  [zoom = 7] {
-  marker-width: 5 + ([margin_of_victory] / [sqrt_positivos]) * 2;
+  [zoom = 13] {
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 32;
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -21,8 +21,8 @@
     } 
   <% }); %> 
   } 
-  [zoom = 8] { 
-  marker-width: 5 + ([margin_of_victory] / [sqrt_positivos]) * 4; 
+  [zoom = 14] { 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 64; 
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -30,8 +30,8 @@
     } 
   <% }); %> 
   } 
-  [zoom = 9] { 
-  marker-width: 5 + ([margin_of_victory] / [sqrt_positivos]) * 8; 
+  [zoom = 15] { 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 128; 
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -39,8 +39,8 @@
     } 
   <% }); %> 
   } 
-  [zoom = 10] { 
-  marker-width: 5 + ([margin_of_victory] / [sqrt_positivos]) * 16; 
+  [zoom = 16] { 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 256; 
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -48,8 +48,8 @@
     } 
   <% }); %> 
   } 
-  [zoom = 11] { 
-  marker-width: 5 + ([margin_of_victory] / [sqrt_positivos]) * 32; 
+  [zoom = 17] { 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 512; 
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -57,8 +57,8 @@
     } 
   <% }); %> 
   } 
-  [zoom = 12] { 
-  marker-width: 5 + ([margin_of_victory] / [sqrt_positivos]) * 64; 
+  [zoom = 18] { 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 1024; 
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -66,8 +66,8 @@
     } 
   <% }); %> 
   } 
-  [zoom = 13] { 
-  marker-width: 5 + ([margin_of_victory] / [sqrt_positivos]) * 100; 
+  [zoom = 19] { 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 2048; 
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -75,8 +75,8 @@
     } 
   <% }); %> 
   } 
-  [zoom >= 14] { 
-  marker-width: 5 + ([margin_of_victory] / [sqrt_positivos]) * 128; 
+  [zoom >= 20] { 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 4096; 
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
