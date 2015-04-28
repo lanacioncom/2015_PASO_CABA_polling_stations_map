@@ -1,0 +1,11 @@
+<!--JET: Tooltip when one polling station is selected-->
+<h1><%- establecimiento.nombre %></h1>
+<% var prov = _.find(DISTRITOS, function(d) { return d.distrito_id == establecimiento.id_distrito; });
+ var secc = _.find(prov.secciones, function(s) { return s.departamento == establecimiento.id_seccion; }); %>
+<h2><%-  secc.nombre %> — <%- secc.provincia == 1 ? 'Capital Federal' : 'Buenos Aires' %></h2>
+<p>Participación: 
+    <strong><%- ((establecimiento.votantes / establecimiento.electores) * 100).toFixed(2) %>%</strong>
+</p>
+<p>Mesas de 
+    <strong><%- establecimiento.mesa_desde %></strong> a <strong><%- establecimiento.mesa_hasta %></strong>
+</p>
