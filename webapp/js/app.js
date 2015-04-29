@@ -25,7 +25,6 @@ function(spin, dummy, config, state, d3viz, templates) {
       //JET: Load parties dictionary 
       $.get("data/diccionario_partidos.json", function(data){
         config.dicc_partidos = data;
-        start();
       });
     });
 
