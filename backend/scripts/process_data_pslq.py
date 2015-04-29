@@ -207,8 +207,8 @@ def make_cache_table(table_polling='locales',
         WITH %(winner)s AS (SELECT id_establecimiento, id_partido, votos,
         row_number() over(partition by id_establecimiento
                           ORDER BY votos DESC) as rank,
-        SQRT(votos - lead(votos,1,0) over(partition by id_establecimiento
-                                          ORDER BY votos DESC)) as margin_victory
+        (votos - lead(votos,1,0) over(partition by id_establecimiento
+                                     ORDER BY votos DESC)) as margin_victory
         FROM %(table_votes)s
         ORDER BY id_establecimiento, rank)
         SELECT c.id_establecimiento_gob as id_establecimiento_gob,
