@@ -13,9 +13,9 @@ requirejs.config({
     }
 });
 
-requirejs(['spin.min', 'cartodb',
-           'app/config','app/state', 'app/d3viz', 'app/templates'],
-function(spin, dummy, config, state, d3viz, templates) {
+requirejs(['cartodb',
+           'app/config','app/state', 'app/templates'],
+function(dummy, config, state, templates) {
   $(function() {
     "use strict";
     
@@ -42,10 +42,6 @@ function(spin, dummy, config, state, d3viz, templates) {
                             id: 'olcreativa.c409ba3f', 
                             attribution: "OpenStreetMaps", 
                             token: 'pk.eyJ1Ijoib2xjcmVhdGl2YSIsImEiOiJEZWUxUmpzIn0.buFJd1-sVkgR01epcQz4Iw'}).addTo(state.map);
-    // var _a = new L.Control.Attribution( { position: 'topright', prefix: false} );
-    // _a.addAttribution(config.atrib_top);
-    // _a.addTo(state.map);
-    // (new L.Control.Attribution({position: 'bottomright', prefix: false})).addAttribution(config.attrib_bottom).addTo(state.map);
 
     //JET: compile template for the description of a given polling station
     var popup_tmpl = _.template(templates.popup);
@@ -122,10 +118,7 @@ function(spin, dummy, config, state, d3viz, templates) {
     //JET: 
     var featureClick = function(event, latlng, pos, establecimiento_data, layerIndex) {
         //JET: 
-        $('#overlay *').fadeOut(200, function() { $(this).remove(); });
-        //JET: change the get(0) call since it seems it is slower 
-        // https://learn.jquery.com/using-jquery-core/faq/how-do-i-pull-a-native-dom-element-from-a-jquery-object/
-        setTimeout(function() { new Spinner(config.SPINNER_OPTS).spin($('#overlay')[0]) }, 200);
+        $('#overlay *').fadeOut(200, function() { $(this).remove();});
         showOverlay();
         state.current_ltlng = latlng;
         //JET: It seems that the decision was to not center the map on each click when interacting

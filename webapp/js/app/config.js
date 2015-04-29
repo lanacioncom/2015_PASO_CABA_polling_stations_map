@@ -1,22 +1,4 @@
 define({
-    SPINNER_OPTS: {
-        lines: 13, // The number of lines to draw
-        length: 10, // The length of each line
-        width: 3, // The line thickness
-        radius: 10, // The radius of the inner circle
-        corners: 1, // Corner roundness (0..1)
-        rotate: 0, // The rotation offset
-        direction: 1, // 1: clockwise, -1: counterclockwise
-        color: '#000', // #rgb or #rrggbb
-        speed: 1.1, // Rounds per second
-        trail: 60, // Afterglow percentage
-        shadow: false, // Whether to render a shadow
-        hwaccel: true, // Whether to use hardware acceleration
-        className: 'spinner', // The CSS class to assign to the spinner
-        zIndex: 2e9, // The z-index (defaults to 2000000000)
-        top: 'auto', // Top position relative to parent in px
-        left: 'auto' // Left position relative to parent in px
-    },
     PARTIDOS_COLORES: {
     18:'#FEDB30', // PRO
     16:'#7CC374', // ECO
@@ -46,15 +28,7 @@ define({
                                  WHERE id_distrito = {{id_distrito}} \n \
                                  AND id_seccion = {{id_seccion}} \n \
                                  ORDER BY circuito, nombre",
-
     distritos: null,
     dicc_partidos: null,
-    SECCIONES_ESTABLECIMIENTOS_TMPL: null,
-
-    atrib_top: "LaNacion.com — <a href=\"#\" onclick=\"$('#credits').css('visibility', 'visible'); \
-                return false;\" id=\"showcredits\"><strong>Créditos</strong></a>",
-
-    attrib_bottom: "Tiles Courtesy of <a href=\"http://www.mapquest.com/\" target=\"_blank\"> \
-                    MapQuest</a> <img src=\"http://developer.mapquest.com/content/osm/mq_logo.png\">",
     cdn_proxy: ""
 });
