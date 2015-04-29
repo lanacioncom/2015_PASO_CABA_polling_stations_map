@@ -83,12 +83,14 @@ function(dummy, config, state, templates) {
     state.map.on('dragend', function(e, x, y) {
         if (state.current_ltlng !== null && !state.map.getBounds().contains(state.current_ltlng)) {
             hideOverlay();
+            state.map.closePopup();
         }
     });
 
     //JET: 
     state.map.on('popupclose', function() {
         if (state.featureClicked) state.featureClicked = false;
+        close_slide();
     });
 
     //JET: if we are over a polling station change cursor to pointer
@@ -104,8 +106,6 @@ function(dummy, config, state, templates) {
 
     //JET: Called when the Cartodb SQL has finished
     var featureClickDone = function(latlng, establecimiento_data, votos_data) {
-        console.log(votos_data.rows[1].id_partido)
-        console.log(config.dicc_partidos)
         var popup = L.popup()
             .setLatLng(latlng)
             .setContent(popup_tmpl({establecimiento: establecimiento_data,
@@ -128,8 +128,6 @@ function(dummy, config, state, templates) {
         $('#results').animate({right:'0%'}, 'fast', function(){
             animate_barras();
         });
-        // $('#overlay *').fadeIn(200);
-        // d3viz.barchart(d);
     };
 
     //JET: 
@@ -166,12 +164,10 @@ function(dummy, config, state, templates) {
              sql: config.LAYER_SQL,
              //JET: Use the cartocss underscore template and pass it to the layer
              cartocss: CARTOCSS_TMPL({ colores: config.PARTIDOS_COLORES }),
-             //TODO: Check interactivity
              interactivity: 'id_establecimiento,nombre,direccion,id_distrito,id_seccion, \
                             circuito,mesa_desde, mesa_hasta, electores, \
                             votantes, positivos, id_partido, votos, \
                             margin_victory, sqrt_positivos',
-             //interactivity: 'nombre,direccion,distrito_id,seccion_id,circuito,mesa_desde,mesa_hasta, electores, votantes, positivos,total_parcodigo,vot_id_partido,margin_of_victory, sqrt_positivos',
          }]
      })
       .addTo(state.map)
@@ -184,6 +180,3 @@ function(dummy, config, state, templates) {
       });
   });
 });
-
-//JET: Execute when document ready
-// from here https://api.jquery.com/ready/
