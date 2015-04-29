@@ -14,7 +14,7 @@
   <% }); %>
   }
   [zoom = 13] {
-  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * .9;
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 1.4;
   /*marker-width: 5 + ([margin_victory]) * .6;*/
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
@@ -25,7 +25,7 @@
   <% }); %> 
   } 
   [zoom = 14] { 
-  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * .9; 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 2.4; 
   /*marker-width: 5 + ([margin_victory]) * .9;*/
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
@@ -35,7 +35,7 @@
   <% }); %> 
   } 
   [zoom = 15] { 
-  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 128; 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 2.4; 
    /*marker-width: 5 + ([margin_victory]) * .9;*/
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
@@ -45,7 +45,7 @@
   <% }); %> 
   } 
   [zoom = 16] { 
-  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 256; 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 3; 
    /*marker-width: 5 + ([margin_victory]) * .9;*/
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
