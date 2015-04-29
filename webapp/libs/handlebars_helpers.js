@@ -138,5 +138,6 @@ var animate_barras = function(){
 function close_slide(){
 	$('#results').animate({right:'-50%'},'fast', function(){
 		$('#results').html("");
+		$('.leaflet-popup-pane').html("");
 	});
 }
