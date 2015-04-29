@@ -1,9 +1,8 @@
 <!--JET: btoa is used to encrypt the json retrieved SQL 
 query result https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/btoa-->
-<button>← Volver</button>
-<h1><%- seccion %></h1>
-<ul>
+<!-- comunas -->
+<select>
 <% _.each(establecimientos, function(e) { %>
-<li><a href="" data-establecimiento='<%- btoa(JSON.stringify(e)) %>' data-point="<%- JSON.parse(e.g)['coordinates'] %>"><%- e.nombre %></a></li>
+<option data-establecimiento='<%- btoa(JSON.stringify(e)) %>' data-point="<%- JSON.parse(e.g)['coordinates'] %>"><%- e.nombre %><option>
 <% }); %>
-</ul>
+</select>
