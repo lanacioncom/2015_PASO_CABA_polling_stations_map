@@ -13,9 +13,9 @@ requirejs.config({
     }
 });
 
-requirejs(['spin.min', 'cartodb', 'app/helpers',
+requirejs(['spin.min', 'cartodb',
            'app/config','app/state', 'app/d3viz', 'app/templates'],
-function(spin, dummy, helpers, config, state, d3viz, templates) {
+function(spin, dummy, config, state, d3viz, templates) {
   function start() {
     //JET: underscore template function returns a function so we are calling it on the fly
     // we have not compiled this since it is used only once.
@@ -72,6 +72,17 @@ function(spin, dummy, helpers, config, state, d3viz, templates) {
                 $('#secciones-establecimientos').html(h);
             });
     });
+
+    $(".creditos").click(function(){
+        $(".creVent").fadeIn(200);
+        $(".creVent .txts").delay(300).fadeIn(200);
+    });
+
+    $(".cerrar").click(function(){
+        $(".creVent .txts").fadeOut(200);
+        $(".creVent").delay(300).fadeOut(200);
+    });
+
   };
   $(function() {
     "use strict";
@@ -113,7 +124,7 @@ function(spin, dummy, helpers, config, state, d3viz, templates) {
     //JET: compile template for the description of a given polling station
     var popup_tmpl = _.template(templates.popup);
     //JET: compile template for the results of a given polling station
-    var overlay_tmpl = _.template(templates.overlay);
+    var overlay_tmpl = Handlebars.compile(templates.overlay);
     
     //JET: Keep state
 
@@ -201,24 +212,21 @@ function(spin, dummy, helpers, config, state, d3viz, templates) {
                                     distritos: config.distritos}))
             .openOn(state.map);
 
-        var d = votos_data.rows.slice(0,3);
+        var d = votos_data.rows;
         d.forEach(function(d) {
             d.pct = (d.votos / establecimiento_data.positivos) * 100;
         });
-        var sum_otros = _.reduce(votos_data.rows.slice(3), function(m, s) { return m + s.votos; }, 0);
-        d[3] = {
-            descripcion: 'Otros',
-            votos: sum_otros,
-            id_partido: 9999,
-            pct: (sum_otros / establecimiento_data.positivos) * 100
-        };
+        console.log(d)
+        $('#results').html(overlay_tmpl({
+            e: establecimiento_data,
+            data: d,
+            dict_partidos: config.dicc_partidos,
+            max: get_max_obj(d, 'pct')
 
-        $('#overlay').html(overlay_tmpl({
-            establecimiento: establecimiento_data,
-            pad: helpers.pad
             }));
-        $('#overlay *').fadeIn(200);
-        d3viz.barchart(d);
+        animate_barras()
+        // $('#overlay *').fadeIn(200);
+        // d3viz.barchart(d);
     };
 
     //JET: 
