@@ -4,7 +4,7 @@
 <div class="chart" style="height: 160px; width: 100%;"></div>
 <h3>Telegramas de mesas</h3>
 <ul>
-<% for (var i=parseInt(establecimiento.mesa_desde); i <= parseInt(establecimiento.mesa_hasta); i++) { %>
-   <li><a target="_blank" href="http://www.resultados.gob.ar/telegramas/<%- pad(establecimiento.distrito_id, 2) %>/<%- pad(establecimiento.seccion_id, 3) %>/<%- establecimiento.circuito.match(/[A-Z]/) ? establecimiento.circuito : pad(parseInt(establecimiento.circuito),4) %>/<%- pad(establecimiento.distrito_id, 2) + pad(establecimiento.seccion_id, 3) + (establecimiento.circuito.match(/[A-Z]/) ? establecimiento.circuito : pad(parseInt(establecimiento.circuito),4)) %><%- establecimiento.circuito.match(/[A-Z]/) ? '' : '_' %><%- pad(i, 4) %>.htm"><%- i %></a></li>
+<% for (var i=parseInt(establecimiento.mesa_desde);i <= parseInt(establecimiento.mesa_hasta);i++) { %>
+   <li><a target="_blank" href="http://www.resultados.gob.ar/telegramas/<%- pad(establecimiento.id_distrito, 2) %>/<%- pad(establecimiento.id_seccion, 3) %>/<%- pad(parseInt(establecimiento.circuito),4) %>/<%- pad(establecimiento.id_distrito, 2) + pad(establecimiento.id_seccion, 3) + pad(parseInt(establecimiento.circuito),4) %><%- '_' %><%- pad(i, 4) %>.htm"><%- i %></a></li>
    <% } %>
 </ul>

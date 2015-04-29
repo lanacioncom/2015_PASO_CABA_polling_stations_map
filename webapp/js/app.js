@@ -13,8 +13,9 @@ requirejs.config({
     }
 });
 
-requirejs(['spin.min', 'cartodb', 'app/config','app/state', 'app/d3viz', 'app/templates'],
-function(spin, dummy, config, state, barchart, templates) {
+requirejs(['spin.min', 'cartodb', 'app/helpers',
+           'app/config','app/state', 'app/d3viz', 'app/templates'],
+function(spin, dummy, helpers, config, state, d3viz, templates) {
   function start() {
     //JET: underscore template function returns a function so we are calling it on the fly
     // we have not compiled this since it is used only once.
@@ -196,26 +197,28 @@ function(spin, dummy, config, state, barchart, templates) {
     var featureClickDone = function(latlng, establecimiento_data, votos_data) {
         var popup = L.popup()
             .setLatLng(latlng)
-            .setContent(popup_tmpl({establecimiento: establecimiento_data}))
+            .setContent(popup_tmpl({establecimiento: establecimiento_data,
+                                    distritos: config.distritos}))
             .openOn(state.map);
 
-        var d = votos_data.rows.slice(0,4);
+        var d = votos_data.rows.slice(0,3);
         d.forEach(function(d) {
             d.pct = (d.votos / establecimiento_data.positivos) * 100;
         });
-        var sum_otros = _.reduce(votos_data.rows.slice(4), function(m, s) { return m + s.votos; }, 0);
-        d[4] = {
-            pardenominacion: 'Otros',
-            sum: sum_otros,
+        var sum_otros = _.reduce(votos_data.rows.slice(3), function(m, s) { return m + s.votos; }, 0);
+        d[3] = {
+            descripcion: 'Otros',
+            votos: sum_otros,
             id_partido: 9999,
             pct: (sum_otros / establecimiento_data.positivos) * 100
         };
 
         $('#overlay').html(overlay_tmpl({
             establecimiento: establecimiento_data,
-        }));
+            pad: helpers.pad
+            }));
         $('#overlay *').fadeIn(200);
-        barChart(d);
+        d3viz.barchart(d);
     };
 
     //JET: 
@@ -235,7 +238,6 @@ function(spin, dummy, config, state, barchart, templates) {
             var query = FEATURE_CLICK_SQL_TMPL({
                 establecimiento: establecimiento_data
             });
-            console.log(query)
             config.sql.execute(query, establecimiento_data)
                 //JET: partially apply a function http://underscorejs.org/#partial
                 .done(_.partial(featureClickDone, latlng, establecimiento_data))
@@ -259,7 +261,7 @@ function(spin, dummy, config, state, barchart, templates) {
              //TODO: Check interactivity
              interactivity: 'id_establecimiento,nombre,direccion,id_distrito,id_seccion, \
                             circuito,mesa_desde, mesa_hasta, electores, \
-                            positivos, id_partido, votos, \
+                            votantes, positivos, id_partido, votos, \
                             margin_victory, sqrt_positivos',
              //interactivity: 'nombre,direccion,distrito_id,seccion_id,circuito,mesa_desde,mesa_hasta, electores, votantes, positivos,total_parcodigo,vot_id_partido,margin_of_victory, sqrt_positivos',
          }]
