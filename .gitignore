@@ -1,4 +1,3 @@
-*.sublime-*
+node_modules
 .project
 .pydevproject
-
