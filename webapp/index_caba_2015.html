@@ -4,89 +4,26 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <title>Resultados PASO CABA 2015 — LaNacion.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
-        <![endif]-->
+    <![endif]-->
+    <link rel="stylesheet" href="css/cartodb.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <div id="map" style="height: 100%; min-height: 600px;">
-    </div>
+    <div id="map" style="height: 100%; min-height: 600px;"></div>
     <!--JET: Aqui meteremos las comunas -->
-    <div id="filtro">
-    </div>
+    <div id="filter"></div>
     <!--JET: Aquí va la parte de resultados de un determinado establecimiento -->
-    <div id="overlay" style="left: 100%;">
-    </div>
+    <div id="overlay" style="left: 100%;"></div>
     <!--JET: Créditos de la app -->
-    <div id="credits">
-      <p>Elaborado con datos de <a target="_blank" href="http://www.resultados.gob.ar">Dirección Nacional Electoral</a>, <a target="_blank" href="http://www.mapaeducativo.edu.ar">Ministerio de Educación</a> y procesamiento propio</p>
-      <p>Resultados a nivel mesa agregados por establecimiento para precandidatos a intendente (PASO 2015)</p>
-      <p><strong>Producción de datos</strong>: Inés Pujana, Florencia Coelho, Guadalupe López</p>
-      <p><strong>Programación y procesamiento de datos</strong>: <a href="http://juanelosua.com" target="_blank">Juan Elosua</a> (<a target="_blank" href="http://www.opennews.org/">Knight-Mozilla OpenNews</a>)</p>
-      <p><strong>Jefe de diseño interactivo</strong>: Juan Diego López</p>
-      <p><strong>Editor responsable</strong>: Gastón Roitberg</p>
-      <p style="width: 100%; text-align: right"><button>cerrar</button></p>
-    </div>
-
-    <!--JET: Listado de secciones - Navegación-->
-    <script type="text/template" id="secciones-template">
-      <div id="secciones-container">
-        <div id="secciones-menu">
-          <% _.each(distritos, function(d) { %>
-          <h1><span>▸</span> <%- d.provincia %></h1>
-          <ul style="display: none;">
-            <% _.each(_.sortBy(d.secciones, function(s) { return s.departamento; }), function(s) { %>
-            <li><a href="<%- s.provincia %>/<%- s.departamento %>" data-bounds="<%- JSON.stringify(s.bounds) %>" data-distrito_id="<%- s.provincia %>" data-seccion_id="<%- s.departamento %>"><%- s.nombre %></a></li>
-            <% }); %>
-          </ul>
-          <% }); %>
-        </div>
-        <div id="secciones-establecimientos">
-        </div>
-      </div>
-    </script>
-
-    <!--JET: btoa is used to encrypt the json retrieved SQL query result https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/btoa-->
-    <script type="text/template" id="secciones-establecimientos-template">
-      <button>← Volver</button>
-      <h1><%- seccion %></h1>
-      <ul>
-      <% _.each(establecimientos, function(e) { %>
-      <li><a href="" data-establecimiento='<%- btoa(JSON.stringify(e)) %>' data-point="<%- JSON.parse(e.g)['coordinates'] %>"><%- e.nombre %></a></li>
-      <% }); %>
-      </ul>
-    </script>
-
-    <!--JET: Left side overlay when one polling station is selected-->
-    <script type="text/template" id="overlay-template">
-      <h1><%- establecimiento.nombre %></h1>
-      <h2><%- establecimiento.direccion %></h2>
-      <div class="chart" style="height: 160px; width: 100%;"></div>
-      <h3>Telegramas de mesas</h3>
-      <ul>
-        <% for (var i=parseInt(establecimiento.mesa_desde); i <= parseInt(establecimiento.mesa_hasta); i++) { %>
-           <li><a target="_blank" href="http://www.resultados.gob.ar/telegramas/<%- pad(establecimiento.distrito_id, 2) %>/<%- pad(establecimiento.seccion_id, 3) %>/<%- establecimiento.circuito.match(/[A-Z]/) ? establecimiento.circuito : pad(parseInt(establecimiento.circuito),4) %>/<%- pad(establecimiento.distrito_id, 2) + pad(establecimiento.seccion_id, 3) + (establecimiento.circuito.match(/[A-Z]/) ? establecimiento.circuito : pad(parseInt(establecimiento.circuito),4)) %><%- establecimiento.circuito.match(/[A-Z]/) ? '' : '_' %><%- pad(i, 4) %>.htm"><%- i %></a></li>
-           <% } %>
-      </ul>
-    </script>
-
-    <!--JET: Tooltip when one polling station is selected-->
-    <script type="text/template" id="popup-template">
-      <h1><%- establecimiento.nombre %></h1>
-      <% var prov = _.find(DISTRITOS, function(d) { return d.distrito_id == establecimiento.id_distrito; });
-         var secc = _.find(prov.secciones, function(s) { return s.departamento == establecimiento.id_seccion; }); %>
-      <h2><%-  secc.nombre %> — <%- secc.provincia == 1 ? 'Capital Federal' : 'Buenos Aires' %></h2>
-      <p>Participación: <strong><%- ((establecimiento.votantes / establecimiento.electores) * 100).toFixed(2) %>%</strong></p>
-      <p>Mesas de <strong><%- establecimiento.mesa_desde %></strong> a <strong><%- establecimiento.mesa_hasta %></strong></p>
-    </script>
-
-    <script type="text/javascript" src="js/spin.min.js"></script>
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>script>
+    <div id="credits"></div>
+    <!--JET: Need to make sure global Mustache is there before require config
+        More info: https://github.com/CartoDB/cartodb.js/issues/408-->
+    <!--JET: Having issues with requirejs and underscore, just do not use
+        Require for this-->
+    <script type="text/javascript" src="libs/mustache.min.js"></script>
+    <script data-main="js/app" src="libs/require.min.js"></script>
     <!--<script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -21,7 +21,7 @@ html, body {
   visibility: hidden;
 }
 #credits button { background-color: #ddd; border: 1px solid #ccc; cursor: pointer;}
-#overlay, #filtro {
+#overlay, #filter {
   position:absolute;
   width: 25%;
   min-height: 160px;
@@ -40,7 +40,7 @@ html, body {
   -moz-transition: all 0.5s;
 }
 
-#filtro {
+#filter {
   left: 43px;
   top: 10px;
   min-height: 20px;
@@ -58,40 +58,40 @@ html, body {
   transition: all 0.5s;
 }
 #secciones-menu { float: left; width: 150px;}
-#secciones-escuelas { float: left; width: 150px ; }
-#secciones-escuelas button {
+#secciones-establecimientos { float: left; width: 150px ; }
+#secciones-establecimientos button {
   border: 0; background-color: white; outline: none;
   padding: 0;
   cursor: pointer;
 }
-#filtro h1 span {
+#filter h1 span {
   width: 10px; text-align: center; display: inline-block;
 }
 
-#filtro ul {
+#filter ul {
   margin-top: 0;
   list-style-type: none;
   padding-left: 0;
 }
 
-#secciones-escuelas ul {
+#secciones-establecimientos ul {
   list-style-type: disc;
   padding-left: 13px;
 }
 
-#secciones-escuelas ul li {
+#secciones-establecimientos ul li {
   margin-bottom: 5px;
 }
 
-#filtro h1:hover {
+#filter h1:hover {
   cursor: pointer;
 }
 
-#filtro a {
+#filter a {
   color: black; text-decoration: none;
 }
 
-#filtro a:hover {
+#filter a:hover {
   text-decoration: underline;
 }
 
@@ -99,7 +99,7 @@ html, body {
   display: block !important;
 }
 
-#filtro h1, #filtro h2, #overlay h1, #overlay h2 {
+#filter h1, #filter h2, #overlay h1, #overlay h2 {
   font-size: 1em;
   margin: 5px 0px 5px 0px;
   line-height: 100%;
