@@ -1,10 +1,34 @@
-<!--JET: Left side overlay when one polling station is selected-->
-<h1><%- establecimiento.nombre %></h1>
-<h2><%- establecimiento.direccion %></h2>
-<div class="chart" style="height: 160px; width: 100%;"></div>
-<h3>Telegramas de mesas</h3>
-<ul>
-<% for (var i=parseInt(establecimiento.mesa_desde);i <= parseInt(establecimiento.mesa_hasta);i++) { %>
-   <li><a target="_blank" href="http://www.resultados.gob.ar/telegramas/<%- pad(establecimiento.id_distrito, 2) %>/<%- pad(establecimiento.id_seccion, 3) %>/<%- pad(parseInt(establecimiento.circuito),4) %>/<%- pad(establecimiento.id_distrito, 2) + pad(establecimiento.id_seccion, 3) + pad(parseInt(establecimiento.circuito),4) %><%- '_' %><%- pad(i, 4) %>.htm"><%- i %></a></li>
-   <% } %>
-</ul>
+	<div id="x_fuerza">
+		<div class="porc_text">
+			<div class="arrow-before"></div><div class="arrow-after"></div>
+			<div class="porc_partido">{{e.nombre}} </div>
+			<div class="cant_v">{{e.direccion}}</div>
+			<div id="porPart"></div>
+		</div>
+		<div class="porc_text">
+			<div class="arrow-before"></div><div class="arrow-after"></div>
+			<div class="porc_partido">Participación: </div>
+			<div class="cant_v">{{e.votantes }} votantes</div>
+			<div id="porPart">({{division e}}% del total de electores)</div>
+		</div>
+		<ul id="list">
+			{{#each data}}			
+				{{!--
+				<li class="{{chekIsLessThan15}}">
+				--}}
+				<li>{{get_width_bar pct ../max}}
+					<h5 
+						style="padding-left:1.8%;">{{get_partido}} <span>{{toFixed_n_0 votos}} votos</span>
+					</h5>
+					<div class="cont_barra">
+						<div class="barra" data-width="{{get_width_bar pct ../max}}%" style="width:0; background: {{get_partido_color}}">
+							<div class="porc">{{toFixed_n pct}}%</div>
+						</div>
+					</div>
+				</li>
+
+			{{/each}}
+			
+		</ul>
+
+	</div>
