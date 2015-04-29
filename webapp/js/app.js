@@ -240,7 +240,7 @@ function(spin, dummy, config, state, d3viz, templates) {
         state.current_ltlng = latlng;
         //JET: It seems that the decision was to not center the map on each click when interacting
         // with the map itself
-        //map.panTo(latlng);
+        map.panTo(latlng);
         setTimeout(function() {
             //TODO: Couldn't this be done in a single step?
             var query = FEATURE_CLICK_SQL_TMPL({
