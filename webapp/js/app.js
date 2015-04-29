@@ -13,8 +13,7 @@ requirejs.config({
     }
 });
 
-requirejs(['cartodb',
-           'app/config','app/state', 'app/templates'],
+requirejs(['cartodb','app/config','app/state', 'app/templates'],
 function(dummy, config, state, templates) {
   $(function() {
     "use strict";
