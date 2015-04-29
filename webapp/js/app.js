@@ -66,6 +66,16 @@ function(dummy, config, state, templates) {
         $('#overlay').css('left', '73%');
     };
 
+    $(".creditos").click(function(){
+       $(".creVent").fadeIn(200);
+       $(".creVent .txts").delay(300).fadeIn(200);
+    });
+
+    $(".cerrar").click(function(){
+       $(".creVent .txts").fadeOut(200);
+       $(".creVent").delay(300).fadeOut(200);
+    });
+
     //JET: If we move the map manually and the overlay falls out of bounds hide overlay
     state.map.on('dragend', function(e, x, y) {
         if (state.current_ltlng !== null && !state.map.getBounds().contains(state.current_ltlng)) {
