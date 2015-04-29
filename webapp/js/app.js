@@ -90,12 +90,12 @@ function(dummy, config, state, templates) {
 
     //JET: if we are over a polling station change cursor to pointer
     var featureOver = function(e, latlng, pos, data, layerNumber) {
-        $('#map').css('cursor', 'pointer');
+        $('#mapa_cont').css('cursor', 'pointer');
     };
 
     //JET: reset when we are not over a polling station
     var featureOut = function(e, layer) {
-        $('#map').css('cursor', 'auto');
+        $('#mapa_cont').css('cursor', 'auto');
     };
 
 
@@ -111,7 +111,6 @@ function(dummy, config, state, templates) {
         d.forEach(function(d) {
             d.pct = (d.votos / establecimiento_data.positivos) * 100;
         });
-        console.log(d)
         $('#results').html(overlay_tmpl({
             e: establecimiento_data,
             data: d,

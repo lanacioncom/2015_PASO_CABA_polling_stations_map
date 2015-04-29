@@ -226,7 +226,6 @@ header div.compartir{
   width: 120px;
   height: 28px;
   float: right;
-  display: none;
 }
 
 /*////////////////////////////*/
@@ -645,7 +644,7 @@ svg .comuna_active_path, svg text{
 
 .porc_text{
   width: 95%;
-  height: 30px;
+  /*height: 30px;*/
   border-bottom: 1px solid #dadada;
   margin-left: 10px;
 }
@@ -679,7 +678,7 @@ svg .comuna_active_path, svg text{
 .porc_text div.porc_partido {
   font-size: 15px;
     color: #000;
-   float: left;
+   /*float: left;*/
 
 }
 
@@ -691,7 +690,7 @@ svg .comuna_active_path, svg text{
 .porc_text div.cant_v {
   font-size: 15px;
   color: #999;
-  float: left;
+  /*float: left;*/
   margin:0px 4px 0px 10px;
 }
 
@@ -1391,3 +1390,5 @@ div.creVent div.txts div.nombre a:hover{
 .cartodb-logo{
   display: none !important;
 }
+
+.in_line {display: inline;}
