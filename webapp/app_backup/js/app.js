@@ -86,7 +86,7 @@ function(spin, dummy, helpers, config, state, d3viz, templates) {
       });
     });
 
-    state.map = L.map('mapa_cont', {
+    state.map = L.map('map', {
         center: [-34.61597432902992, -58.442115783691406],
         zoom: 12,
         minZoom: 12,

@@ -1,0 +1,15 @@
+<!--JET: Listado de secciones - Navegación-->
+<div id="secciones-container">
+  <div id="secciones-menu">
+    <% _.each(distritos, function(d) { %>
+    <h1><span>▸</span> <%- d.provincia %></h1>
+    <ul style="display: none;">
+      <% _.each(_.sortBy(d.secciones, function(s) { return s.departamento; }), function(s) { %>
+      <li><a href="<%- s.provincia %>/<%- s.departamento %>" data-bounds="<%- JSON.stringify(s.bounds) %>" data-id_distrito="<%- s.provincia %>" data-id_seccion="<%- s.departamento %>"><%- s.nombre %></a></li>
+      <% }); %>
+    </ul>
+    <% }); %>
+  </div>
+  <div id="secciones-establecimientos">
+  </div>
+</div>

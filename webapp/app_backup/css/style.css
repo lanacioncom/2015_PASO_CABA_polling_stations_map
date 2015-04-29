@@ -1,0 +1,143 @@
+html, body {
+  margin: 0; padding: 0; height: 100%;
+}
+
+#credits {
+  width: 300px;
+  height: 270px;
+  position:absolute;
+  top:50%;
+  bottom:0;
+  left:0;
+  right:0;
+  margin: auto;
+  margin-top: -135px;
+  padding: 4px 4px;
+  background-color:rgba(255,255,255,1);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: Helvetica, Arial, sans-serif;
+  visibility: hidden;
+}
+#credits button { background-color: #ddd; border: 1px solid #ccc; cursor: pointer;}
+#overlay, #filter {
+  position:absolute;
+  width: 25%;
+  min-height: 160px;
+  top: 22px;
+  left: 100%;
+  padding: 4px 4px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 100%;
+  color: #223;
+  background-color:rgba(255,255,255,1);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+}
+
+#filter {
+  left: 43px;
+  top: 10px;
+  min-height: 20px;
+  width: 150px;
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 95%;
+  padding: 4px;
+}
+#secciones-container {
+  position: relative;
+  margin: 0px; width: 300px;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+}
+#secciones-menu { float: left; width: 150px;}
+#secciones-establecimientos { float: left; width: 150px ; }
+#secciones-establecimientos button {
+  border: 0; background-color: white; outline: none;
+  padding: 0;
+  cursor: pointer;
+}
+#filter h1 span {
+  width: 10px; text-align: center; display: inline-block;
+}
+
+#filter ul {
+  margin-top: 0;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#secciones-establecimientos ul {
+  list-style-type: disc;
+  padding-left: 13px;
+}
+
+#secciones-establecimientos ul li {
+  margin-bottom: 5px;
+}
+
+#filter h1:hover {
+  cursor: pointer;
+}
+
+#filter a {
+  color: black; text-decoration: none;
+}
+
+#filter a:hover {
+  text-decoration: underline;
+}
+
+#overlay .chart {
+  display: block !important;
+}
+
+#filter h1, #filter h2, #overlay h1, #overlay h2 {
+  font-size: 1em;
+  margin: 5px 0px 5px 0px;
+  line-height: 100%;
+}
+#overlay h1 {
+  font-size: 1.2em;
+}
+#overlay h2,  {
+  font-weight: bold;
+  margin: 0px 0px 0px 0px;
+  color: #999;
+}
+#overlay h3 {
+  margin: 0px;
+}
+#overlay ul {
+  margin-left: 0;
+  list-style-type: none;
+  padding-left: 0;
+}
+#overlay ul li {
+  float: left;
+  width: 30px;
+}
+#overlay li a {
+  text-decoration: none;
+  color: blue;
+}
+#overlay li a.chosen {
+
+}
+.leaflet-popup * {
+  line-height: 100%;
+}
+.leaflet-popup h1 { font-size: 14px; margin: 3px 0 3px 0; }
+.leaflet-popup h2 { color: #999; margin-top: 2px; margin-bottom: 2px; font-size: 1em;}
+.leaflet-popup p { margin: 5px 0; }
+.spinner {
+  left: 50% !important;
+  margin-top: -20% !important;
+}
