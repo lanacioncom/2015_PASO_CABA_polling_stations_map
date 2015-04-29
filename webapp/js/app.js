@@ -13,8 +13,7 @@ requirejs.config({
     }
 });
 
-requirejs(['cartodb',
-           'app/config','app/state', 'app/templates'],
+requirejs(['cartodb','app/config','app/state', 'app/templates'],
 function(dummy, config, state, templates) {
   $(function() {
     "use strict";
@@ -66,6 +65,16 @@ function(dummy, config, state, templates) {
     var showOverlay = function() {
         $('#overlay').css('left', '73%');
     };
+
+    $(".creditos").click(function(){
+       $(".creVent").fadeIn(200);
+       $(".creVent .txts").delay(300).fadeIn(200);
+    });
+
+    $(".cerrar").click(function(){
+       $(".creVent .txts").fadeOut(200);
+       $(".creVent").delay(300).fadeOut(200);
+    });
 
     //JET: If we move the map manually and the overlay falls out of bounds hide overlay
     state.map.on('dragend', function(e, x, y) {
