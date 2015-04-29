@@ -57,6 +57,9 @@ function(dummy, config, state, templates) {
 
     var CARTOCSS_TMPL = _.template(templates.cartocss);
 
+    //JET: credits
+    $('.creVent').html(_.template(templates.credits))
+
     //JET: hide overlay by shifting to the left with animation
     var hideOverlay = function() {
         $('#overlay').css('left', '100%');
@@ -101,10 +104,14 @@ function(dummy, config, state, templates) {
 
     //JET: Called when the Cartodb SQL has finished
     var featureClickDone = function(latlng, establecimiento_data, votos_data) {
+        console.log(votos_data.rows[1].id_partido)
+        console.log(config.dicc_partidos)
         var popup = L.popup()
             .setLatLng(latlng)
             .setContent(popup_tmpl({establecimiento: establecimiento_data,
-                                    distritos: config.distritos}))
+                                    distritos: config.distritos,
+                                    v: votos_data,
+                                    dict_partidos: config.dicc_partidos}))
             .openOn(state.map);
 
         var d = votos_data.rows;
