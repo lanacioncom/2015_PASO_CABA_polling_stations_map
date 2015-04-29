@@ -210,7 +210,7 @@ def make_cache_table(table_polling='locales',
                l.mesa_desde, l.mesa_hasta, l.num_mesas, l.geom,
                l.circuito, l.direccion, l.nombre,
                c.total as electores,
-               t.positivos, sqrt(t.positivos) as sqrt_positivos, t.blancos, t.invalidos,
+               t.positivos, sqrt(t.positivos) as sqrt_positivos, (t.validos + t.invalidos) as votantes,
                w.id_partido, w.votos, w.margin_victory
         FROM %(table_polling)s l
         INNER JOIN %(winner)s w ON l.id = w.id_establecimiento
@@ -248,7 +248,7 @@ def process_CABA():
 
     print "agregando totales por establecimientos de votacion"
     aggregate_totals_by_polling_station('votos_establecimiento')
-    
+
 
     make_cache_table('locales',
                       'votos_establecimiento',
@@ -258,3 +258,4 @@ def process_CABA():
 if __name__ == "__main__":  
     db = connect_dataset()
     process_CABA();
+
