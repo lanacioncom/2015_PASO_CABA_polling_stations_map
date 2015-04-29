@@ -26,6 +26,14 @@ function(dummy, config, state, templates) {
       });
     });
 
+    config.ancho = $(window).width();
+    config.alto = $(window).height();
+
+    $(window).resize(function() {
+        config.ancho = $(window).width();
+        config.alto = $(window).height();
+    });
+
     state.map = L.map('mapa_cont', {
         center: [-34.61597432902992, -58.442115783691406],
         zoom: 12,
@@ -179,9 +187,9 @@ function(dummy, config, state, templates) {
               .on('featureOut', featureOut)
               .on('featureClick', featureClick);
         
-        if(check_location()){ // chequea si has est selecto
+        /*if(check_location()){ // chequea si has est selecto
             var id_establecimiento = check_location().replace("#", "");
-        }
+        }*/
         
       });
   });

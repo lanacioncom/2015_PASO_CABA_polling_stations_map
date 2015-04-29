@@ -30,5 +30,7 @@ define({
                                  ORDER BY circuito, nombre",
     distritos: null,
     dicc_partidos: null,
-    cdn_proxy: "http://olcreativa.lanacion.com.ar/dev/get_url/img.php?img="
+    cdn_proxy: "http://olcreativa.lanacion.com.ar/dev/get_url/img.php?img=",
+    ancho: null,
+    alto: null
 });
