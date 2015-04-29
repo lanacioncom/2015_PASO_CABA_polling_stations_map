@@ -89,7 +89,7 @@ function(spin, dummy, config, state, barchart, templates) {
         center: [-34.61597432902992, -58.442115783691406],
         zoom: 12,
         minZoom: 12,
-        maxZoom: 18,
+        maxZoom: 16,
         attributionControl: false
     });
 
