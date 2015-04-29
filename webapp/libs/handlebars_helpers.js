@@ -134,3 +134,9 @@ var animate_barras = function(){
 		$el.delay(500).animate({width: $el.data("width")}, {duration: 900, queue:false});
 	});
 };
+
+function close_slide(){
+	$('#results').animate({right:'-50%'},'fast', function(){
+		$('#results').html("");
+	});
+}

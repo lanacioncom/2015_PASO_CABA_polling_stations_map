@@ -118,7 +118,9 @@ function(dummy, config, state, templates) {
             max: get_max_obj(d, 'pct')
 
             }));
-        animate_barras()
+        $('#results').animate({right:'0%'}, 'fast', function(){
+            animate_barras();
+        });
         // $('#overlay *').fadeIn(200);
         // d3viz.barchart(d);
     };
