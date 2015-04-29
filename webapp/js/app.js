@@ -13,77 +13,8 @@ requirejs.config({
     }
 });
 
-requirejs(['spin.min', 'cartodb',
-           'app/config','app/state', 'app/d3viz', 'app/templates'],
-function(spin, dummy, config, state, d3viz, templates) {
-  function start() {
-    //JET: underscore template function returns a function so we are calling it on the fly
-    // we have not compiled this since it is used only once.
-    //_.template($('#secciones-template').html())({distritos: DISTRITOS })
-    $('#filter').html( _.template(templates.sections)({distritos: config.distritos }));
-
-    //JET: toggle sections visibility on a given district
-    $('#filter h1').on('click', function(e) {
-        var ul = $(this).next('ul');
-        //TODO: jquery sugar
-        // specify a context to the jquery selector 
-        // http://api.jquery.com/jquery/#jQuery-selector-context
-        var span = $('span', $(this));
-        if (ul.css('display') == 'block') {
-            span.html('▸'); ul.css('display', 'none');
-        }
-        else {
-            span.html('▾'); ul.css('display', 'block');
-        }
-    });
-
-    //JET: click on a section
-    $('#filter a').on('click', function(e) {
-        //JET: prevent default navigation
-        e.preventDefault();
-        //JET: if we are clicking on the same section hide the overlay
-        if (state.prevSeccion !== $(this)) $('#overlay').css('left', '100%');
-        state.prevSeccion = $(this);
-
-        var seccion_nombre = $(this).html();
-        //JET: get the bounds of the section to sync the map accordingly
-        var t = $(this).data('bounds');
-        var b = new L.LatLngBounds(new L.LatLng(t[0][1], t[0][0]),
-                                   new L.LatLng(t[1][1], t[1][0]));
-        var z = state.map.fitBounds(b);
-        //TODO: What does the get method stands for?
-        new Spinner(config.SPINNER_OPTS).spin($('#secciones-establecimientos').get(0))
-        //JET: store previous scrollTop position
-        state.prevScrollTop = $('#filter').scrollTop();
-        //JET: scroll to the beginning
-        $('#filter').scrollTop(0);
-        //JET: push the section container out of sight with an animation
-        $('#secciones-container').css('left', '-150px');
-        config.sql.execute(config.ESTABLECIMIENTOS_SQL_TMPL,
-                    {
-                        id_seccion: $(this).data('id_seccion'),
-                        id_distrito: $(this).data('id_distrito')
-                    })
-            .done(function(data) {
-                var h = config.SECCIONES_ESTABLECIMIENTOS_TMPL({
-                    seccion: seccion_nombre,
-                    establecimientos: data.rows
-                });
-                $('#secciones-establecimientos').html(h);
-            });
-    });
-
-    $(".creditos").click(function(){
-        $(".creVent").fadeIn(200);
-        $(".creVent .txts").delay(300).fadeIn(200);
-    });
-
-    $(".cerrar").click(function(){
-        $(".creVent .txts").fadeOut(200);
-        $(".creVent").delay(300).fadeOut(200);
-    });
-
-  };
+requirejs(['cartodb','app/config','app/state', 'app/templates'],
+function(dummy, config, state, templates) {
   $(function() {
     "use strict";
     
@@ -93,7 +24,6 @@ function(spin, dummy, config, state, d3viz, templates) {
       //JET: Load parties dictionary 
       $.get("data/diccionario_partidos.json", function(data){
         config.dicc_partidos = data;
-        start();
       });
     });
 
@@ -105,21 +35,12 @@ function(spin, dummy, config, state, d3viz, templates) {
         attributionControl: false
     });
 
-    //mbUrl = 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png';
-
-    //var terreno = L.tileLayer(mbUrl, {id: 'olcreativa.c409ba3f', attribution: mbAttr}),
-
-    //var mapboxUrl = 'http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png';
     var mapboxUrl = config.cdn_proxy+'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}';
     //L.tileLayer(mapboxUrl, {attribution: "OpenStreetMaps"}).addTo(state.map);
     L.tileLayer(mapboxUrl, {
                             id: 'olcreativa.c409ba3f', 
                             attribution: "OpenStreetMaps", 
                             token: 'pk.eyJ1Ijoib2xjcmVhdGl2YSIsImEiOiJEZWUxUmpzIn0.buFJd1-sVkgR01epcQz4Iw'}).addTo(state.map);
-    var _a = new L.Control.Attribution( { position: 'topright', prefix: false} );
-    _a.addAttribution(config.atrib_top);
-    _a.addTo(state.map);
-    (new L.Control.Attribution({position: 'bottomright', prefix: false})).addAttribution(config.attrib_bottom).addTo(state.map);
 
     //JET: compile template for the description of a given polling station
     var popup_tmpl = _.template(templates.popup);
@@ -132,45 +53,9 @@ function(spin, dummy, config, state, d3viz, templates) {
         user: config.CARTODB_USER
     });
 
-    //JET: compile template for the polling stations list under each section
-    config.SECCIONES_ESTABLECIMIENTOS_TMPL = _.template(templates.polling);
-
     var FEATURE_CLICK_SQL_TMPL = _.template(templates.feature_click_sql);
 
-    //Click on a polling station link 
-    $(document).on({
-        click: function(e) {
-            //Clear default event
-            e.preventDefault();
-            var point = _.map($(this).data('point').split(','), parseFloat);
-            var latlng = L.latLng(point[1], point[0]);
-            //JET: Access html5 data attributes https://api.jquery.com/data/
-            var d = JSON.parse(atob($(this).data('establecimiento')));
-            //JET: Call the feature click function like on the map
-            featureClick(e, latlng, state.map.latLngToLayerPoint(latlng), d, 0);
-            state.map.setView(latlng, 14);
-        }
-    }, '#secciones-establecimientos a');
-
-    //Click on "volver"
-    $(document).on({
-        click: function(e) {
-            //JET: restore the section view with animation
-            $('#secciones-container').css('left', '5px');
-            //JET: restore previous scrollPosition
-            $('#filtro').scrollTop(state.prevScrollTop);
-        }
-    }, '#secciones-establecimientos button');
-
-
     var CARTOCSS_TMPL = _.template(templates.cartocss);
-
-    //JET: close credit window
-    $('#credits button').on('click', function(e) {
-        e.preventDefault();
-        $('#credits').css('visibility', 'hidden');
-        return false;
-    });
 
     //JET: hide overlay by shifting to the left with animation
     var hideOverlay = function() {
@@ -180,6 +65,16 @@ function(spin, dummy, config, state, d3viz, templates) {
     var showOverlay = function() {
         $('#overlay').css('left', '73%');
     };
+
+    $(".creditos").click(function(){
+       $(".creVent").fadeIn(200);
+       $(".creVent .txts").delay(300).fadeIn(200);
+    });
+
+    $(".cerrar").click(function(){
+       $(".creVent .txts").fadeOut(200);
+       $(".creVent").delay(300).fadeOut(200);
+    });
 
     //JET: If we move the map manually and the overlay falls out of bounds hide overlay
     state.map.on('dragend', function(e, x, y) {
@@ -231,10 +126,7 @@ function(spin, dummy, config, state, d3viz, templates) {
     //JET: 
     var featureClick = function(event, latlng, pos, establecimiento_data, layerIndex) {
         //JET: 
-        $('#overlay *').fadeOut(200, function() { $(this).remove(); });
-        //JET: change the get(0) call since it seems it is slower 
-        // https://learn.jquery.com/using-jquery-core/faq/how-do-i-pull-a-native-dom-element-from-a-jquery-object/
-        setTimeout(function() { new Spinner(config.SPINNER_OPTS).spin($('#overlay')[0]) }, 200);
+        $('#overlay *').fadeOut(200, function() { $(this).remove();});
         showOverlay();
         state.current_ltlng = latlng;
         //JET: It seems that the decision was to not center the map on each click when interacting
