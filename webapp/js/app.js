@@ -42,10 +42,10 @@ function(spin, dummy, config, state, d3viz, templates) {
                             id: 'olcreativa.c409ba3f', 
                             attribution: "OpenStreetMaps", 
                             token: 'pk.eyJ1Ijoib2xjcmVhdGl2YSIsImEiOiJEZWUxUmpzIn0.buFJd1-sVkgR01epcQz4Iw'}).addTo(state.map);
-    var _a = new L.Control.Attribution( { position: 'topright', prefix: false} );
-    _a.addAttribution(config.atrib_top);
-    _a.addTo(state.map);
-    (new L.Control.Attribution({position: 'bottomright', prefix: false})).addAttribution(config.attrib_bottom).addTo(state.map);
+    // var _a = new L.Control.Attribution( { position: 'topright', prefix: false} );
+    // _a.addAttribution(config.atrib_top);
+    // _a.addTo(state.map);
+    // (new L.Control.Attribution({position: 'bottomright', prefix: false})).addAttribution(config.attrib_bottom).addTo(state.map);
 
     //JET: compile template for the description of a given polling station
     var popup_tmpl = _.template(templates.popup);
@@ -58,45 +58,9 @@ function(spin, dummy, config, state, d3viz, templates) {
         user: config.CARTODB_USER
     });
 
-    //JET: compile template for the polling stations list under each section
-    config.SECCIONES_ESTABLECIMIENTOS_TMPL = _.template(templates.polling);
-
     var FEATURE_CLICK_SQL_TMPL = _.template(templates.feature_click_sql);
 
-    //Click on a polling station link 
-    $(document).on({
-        click: function(e) {
-            //Clear default event
-            e.preventDefault();
-            var point = _.map($(this).data('point').split(','), parseFloat);
-            var latlng = L.latLng(point[1], point[0]);
-            //JET: Access html5 data attributes https://api.jquery.com/data/
-            var d = JSON.parse(atob($(this).data('establecimiento')));
-            //JET: Call the feature click function like on the map
-            featureClick(e, latlng, state.map.latLngToLayerPoint(latlng), d, 0);
-            state.map.setView(latlng, 14);
-        }
-    }, '#secciones-establecimientos a');
-
-    //Click on "volver"
-    $(document).on({
-        click: function(e) {
-            //JET: restore the section view with animation
-            $('#secciones-container').css('left', '5px');
-            //JET: restore previous scrollPosition
-            $('#filtro').scrollTop(state.prevScrollTop);
-        }
-    }, '#secciones-establecimientos button');
-
-
     var CARTOCSS_TMPL = _.template(templates.cartocss);
-
-    //JET: close credit window
-    $('#credits button').on('click', function(e) {
-        e.preventDefault();
-        $('#credits').css('visibility', 'hidden');
-        return false;
-    });
 
     //JET: hide overlay by shifting to the left with animation
     var hideOverlay = function() {
