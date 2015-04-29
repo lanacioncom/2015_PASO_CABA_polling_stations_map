@@ -16,74 +16,6 @@ requirejs.config({
 requirejs(['spin.min', 'cartodb',
            'app/config','app/state', 'app/d3viz', 'app/templates'],
 function(spin, dummy, config, state, d3viz, templates) {
-  function start() {
-    //JET: underscore template function returns a function so we are calling it on the fly
-    // we have not compiled this since it is used only once.
-    //_.template($('#secciones-template').html())({distritos: DISTRITOS })
-    $('#filter').html( _.template(templates.sections)({distritos: config.distritos }));
-
-    //JET: toggle sections visibility on a given district
-    $('#filter h1').on('click', function(e) {
-        var ul = $(this).next('ul');
-        //TODO: jquery sugar
-        // specify a context to the jquery selector 
-        // http://api.jquery.com/jquery/#jQuery-selector-context
-        var span = $('span', $(this));
-        if (ul.css('display') == 'block') {
-            span.html('▸'); ul.css('display', 'none');
-        }
-        else {
-            span.html('▾'); ul.css('display', 'block');
-        }
-    });
-
-    //JET: click on a section
-    $('#filter a').on('click', function(e) {
-        //JET: prevent default navigation
-        e.preventDefault();
-        //JET: if we are clicking on the same section hide the overlay
-        if (state.prevSeccion !== $(this)) $('#overlay').css('left', '100%');
-        state.prevSeccion = $(this);
-
-        var seccion_nombre = $(this).html();
-        //JET: get the bounds of the section to sync the map accordingly
-        var t = $(this).data('bounds');
-        var b = new L.LatLngBounds(new L.LatLng(t[0][1], t[0][0]),
-                                   new L.LatLng(t[1][1], t[1][0]));
-        var z = state.map.fitBounds(b);
-        //TODO: What does the get method stands for?
-        new Spinner(config.SPINNER_OPTS).spin($('#secciones-establecimientos').get(0))
-        //JET: store previous scrollTop position
-        state.prevScrollTop = $('#filter').scrollTop();
-        //JET: scroll to the beginning
-        $('#filter').scrollTop(0);
-        //JET: push the section container out of sight with an animation
-        $('#secciones-container').css('left', '-150px');
-        config.sql.execute(config.ESTABLECIMIENTOS_SQL_TMPL,
-                    {
-                        id_seccion: $(this).data('id_seccion'),
-                        id_distrito: $(this).data('id_distrito')
-                    })
-            .done(function(data) {
-                var h = config.SECCIONES_ESTABLECIMIENTOS_TMPL({
-                    seccion: seccion_nombre,
-                    establecimientos: data.rows
-                });
-                $('#secciones-establecimientos').html(h);
-            });
-    });
-
-    $(".creditos").click(function(){
-        $(".creVent").fadeIn(200);
-        $(".creVent .txts").delay(300).fadeIn(200);
-    });
-
-    $(".cerrar").click(function(){
-        $(".creVent .txts").fadeOut(200);
-        $(".creVent").delay(300).fadeOut(200);
-    });
-
-  };
   $(function() {
     "use strict";
     
@@ -105,11 +37,6 @@ function(spin, dummy, config, state, d3viz, templates) {
         attributionControl: false
     });
 
-    //mbUrl = 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png';
-
-    //var terreno = L.tileLayer(mbUrl, {id: 'olcreativa.c409ba3f', attribution: mbAttr}),
-
-    //var mapboxUrl = 'http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png';
     var mapboxUrl = config.cdn_proxy+'https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}';
     //L.tileLayer(mapboxUrl, {attribution: "OpenStreetMaps"}).addTo(state.map);
     L.tileLayer(mapboxUrl, {
