@@ -216,7 +216,6 @@ function(spin, dummy, config, state, d3viz, templates) {
         d.forEach(function(d) {
             d.pct = (d.votos / establecimiento_data.positivos) * 100;
         });
-        console.log(d)
         $('#results').html(overlay_tmpl({
             e: establecimiento_data,
             data: d,

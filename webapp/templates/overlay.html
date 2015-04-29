@@ -1,22 +1,14 @@
 	<div id="x_fuerza">
 		<div class="porc_text">
-			<div class="arrow-before"></div><div class="arrow-after"></div>
-			<div class="porc_partido">{{e.nombre}} </div>
-			<div class="cant_v">{{e.direccion}}</div>
-			<div id="porPart"></div>
-		</div>
-		<div class="porc_text">
-			<div class="arrow-before"></div><div class="arrow-after"></div>
-			<div class="porc_partido">Participación: </div>
-			<div class="cant_v">{{e.votantes }} votantes</div>
-			<div id="porPart">({{division e}}% del total de electores)</div>
+			<div style="margin-bottom: 0px" class="porc_partido"><b>{{e.nombre}} </b></div>
+			<div style="margin-bottom: 5px" class="porc_partido">{{e.direccion}}</div>
 		</div>
 		<ul id="list">
 			{{#each data}}			
 				{{!--
 				<li class="{{chekIsLessThan15}}">
 				--}}
-				<li>{{get_width_bar pct ../max}}
+				<li>
 					<h5 
 						style="padding-left:1.8%;">{{get_partido}} <span>{{toFixed_n_0 votos}} votos</span>
 					</h5>
@@ -30,5 +22,5 @@
 			{{/each}}
 			
 		</ul>
-
+		<div style="margin-top: 5px" class="porc_partido"><b>Participación: </b>{{e.votantes }} votantes ({{division e}}% del total de electores)</div>
 	</div>
