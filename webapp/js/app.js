@@ -12,12 +12,11 @@ requirejs.config({
         'text': 'plugins/text'
     }
 });
-
+var p_link;
 requirejs(['cartodb','app/config','app/state', 'app/templates'],
 function(dummy, config, state, templates) {
   $(function() {
     "use strict";
-    
     //JET: Load sections
     $.get("data/comunas.json", function(comunas) {
       config.distritos = comunas;
@@ -128,6 +127,8 @@ function(dummy, config, state, templates) {
         $('#results').animate({right:'0%'}, 'fast', function(){
             animate_barras();
         });
+
+        location.hash = establecimiento_data.id_establecimiento
     };
 
     //JET: 
@@ -177,6 +178,11 @@ function(dummy, config, state, templates) {
           layer.on('featureOver', featureOver)
               .on('featureOut', featureOut)
               .on('featureClick', featureClick);
+        
+        if(check_location()){ // chequea si has est selecto
+            var id_establecimiento = check_location().replace("#", "");
+        }
+        
       });
   });
 });
