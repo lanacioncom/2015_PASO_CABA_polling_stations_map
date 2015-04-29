@@ -4,8 +4,8 @@
   marker-line-width: 1;
   marker-line-opacity: 1;
   [zoom = 12] {
-    /*marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 16;*/
-    marker-width: 5 + ([margin_victory]) * .3;
+    marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 16;
+    /*marker-width: 5 + ([margin_victory]) * .3;*/
   <% _.each(_.pairs(colores), function(p) { %>
     [id_partido=<%- p[0] %>] {
       marker-fill: <%- p[1] %>;
@@ -14,8 +14,8 @@
   <% }); %>
   }
   [zoom = 13] {
-  /*marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 32;*/
-  marker-width: 5 + ([margin_victory]) * .6;
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 32;
+  /*marker-width: 5 + ([margin_victory]) * .6;*/
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -25,8 +25,8 @@
   <% }); %> 
   } 
   [zoom = 14] { 
-  /*marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 64;*/ 
-  marker-width: 5 + ([margin_victory]) * .9;
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 64; 
+  /*marker-width: 5 + ([margin_victory]) * .9;*/
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -35,8 +35,8 @@
   <% }); %> 
   } 
   [zoom = 15] { 
-  /*marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 128;*/ 
-   marker-width: 5 + ([margin_victory]) * .9;
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 128; 
+   /*marker-width: 5 + ([margin_victory]) * .9;*/
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -45,8 +45,8 @@
   <% }); %> 
   } 
   [zoom = 16] { 
-  /*marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 256;*/ 
-   marker-width: 5 + ([margin_victory]) * .9;
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 256; 
+   /*marker-width: 5 + ([margin_victory]) * .9;*/
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 
@@ -55,8 +55,8 @@
   <% }); %> 
   } 
   [zoom = 17] { 
-  /*marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 512;*/
-   marker-width: 5 + ([margin_victory]) * .9; 
+  marker-width: 5 + ([margin_victory] / [sqrt_positivos]) * 512;
+   /*marker-width: 5 + ([margin_victory]) * .9; */
   <% _.each(_.pairs(colores), function(p) { %> 
     [id_partido=<%- p[0] %>] { 
     marker-fill: <%- p[1] %>; 

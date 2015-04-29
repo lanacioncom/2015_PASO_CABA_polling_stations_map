@@ -40,8 +40,7 @@ define({
     CARTODB_USER: 'lndata',
     sql: null,
     //JET: Cartodb SQL template
-    LAYER_SQL: "SELECT * FROM cache_votos_paso_2015 \
-                order by margin_victory desc",
+    LAYER_SQL: "SELECT * FROM cache_votos_paso_2015 order by (margin_victory / sqrt_positivos) desc",
     ESTABLECIMIENTOS_SQL_TMPL: "SELECT *, st_asgeojson(the_geom) as g \n \
                                  FROM cache_votos_paso_2015 \n \
                                  WHERE id_distrito = {{id_distrito}} \n \
