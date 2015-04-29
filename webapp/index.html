@@ -91,8 +91,6 @@
 		<li><span class="bullet bk_otros">&nbsp;</span> Otros</li>
 	</ul>-->
 
-	<div class="ayuda" id="ayud1">FILTRAR POR INTERNA</div>
-
 	<div class="compartir">
 		<a href="mailto:?subject=Mirá el mapa de resultados de las PASO en CABA&body=Elecciones primarias 2015 en lanacion.com, toda la cobertura --> http://www.lanacion.com.ar/elecciones-2015-t50499" class="btn" id="mail" title="Compartir por mail"></a>
 		<a target="_blank" href="#" onclick="myPopup('https://plus.google.com/share?url=http://www.lanacion.com.ar/elecciones-2015-t50499')" class="btn" id="google" title="Compartir en Google+"></a>
@@ -101,40 +99,6 @@
 	</div>
 
 </header>
-
-
-<!-- filtros -->
-<section id="filtros" class="clearfix">
-	<h3 class="box arrow">TOTAL CABA</h3>
-	<div id="selected" class="arrow">
-		<hr />
-		<h4 onclick="app.reset(this); return false;">A. Borthagaray</h4>
-	</div>
-
-
-	<select id="opts" class="">
-		<script type="text/template" id="tmpl_opts">
-			<option value="00" selected="selected">Todas las fuerzas políticas</option>
-			{{#each this}}
-				{{#if select}}
-				<option value="{{@key}}">{{nombre_partido}} (interna)</option>
-				{{/if}}
-			{{/each}}
-			{{!--
-			<option value="99">Listas únicas</option>
-			--}}
-		</script>
-	<!--<option value="x_fuerza">Todas las fuerzas políticas</option>
-		<option value="pro">Pro (interna)</option>
-		<option value="fpv">FPV (interna)</option>
-		<option value="eco">ECO (interna)</option>
-		<option value="mst">MST (interna)</option>
-		<option value="bien_comun">Bien Común (interna)</option>
-		<option value="surgen">Surgen (interna)</option>
-		<option value="unicas">Listás únicas</option> 
-	-->
-	</select>
-</section>
 
 <section id="cont_data" class="clearfix">
 
@@ -180,9 +144,6 @@
 </section>
 <footer>
 	<div class="creditos">Créditos</div>
-	<div class="datos" id="padron">Padrón total: <span></span></div>
-	<div class="datos" id="votos">Participación: <span>%</span></div>
-	<div class="datos" id="mesas" style="border-left:0px">Mesas escrutadas: <span>%</span></div>
 </footer>
 
 <!-- build:js -->
