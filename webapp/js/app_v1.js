@@ -34,6 +34,8 @@ function(dummy, config, state, templates) {
         config.alto = $(window).height();
     });
 
+    $
+
     state.map = L.map('mapa_cont', {
         center: [-34.61597432902992, -58.442115783691406],
         zoom: 12,
@@ -63,6 +65,22 @@ function(dummy, config, state, templates) {
     var FEATURE_CLICK_SQL_TMPL = _.template(templates.feature_click_sql);
 
     var CARTOCSS_TMPL = _.template(templates.cartocss);
+
+    //JET: sharing
+    $("a#google").click(function(){
+        window.open( config.google_url, "Compartir", "status = yes, height = 360, width = 500, resizable = yes, left = "+(config.ancho/2+250)+", top =" +(config.alto/2-150) );
+        return false;
+    });
+
+    $("a#twit").click(function(){
+        window.open( config.twitter_url, "Compartir", "status = yes, height = 360, width = 500, resizable = yes, left = "+(config.ancho/2+250)+", top =" +(config.alto/2-150) );
+        return false;
+    });
+
+    $("a#facebook").click(function(){
+        window.open( config.facebook_url, "Compartir", "status = yes, height = 360, width = 500, resizable = yes, left = "+(config.ancho/2+250)+", top =" +(config.alto/2-150) );
+        return false;
+    });
 
     //JET: credits
     $('.creVent').html(_.template(templates.credits))

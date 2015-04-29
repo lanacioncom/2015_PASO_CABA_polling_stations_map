@@ -32,5 +32,9 @@ define({
     dicc_partidos: null,
     cdn_proxy: "http://olcreativa.lanacion.com.ar/dev/get_url/img.php?img=",
     ancho: null,
-    alto: null
+    alto: null,
+    google_url: "https://plus.google.com/share?url=http://www.lanacion.com.ar/elecciones-2015-t50499",
+    twitter_url: "http://twitter.com/share?text=Mirá el mapa de resultados de las PASO en CABA de @lanacioncom&url=http://www.lanacion.com.ar/elecciones-2015-t50499&hashtags=lanacioncom,elecciones2015",
+    facebook_url: "https://www.facebook.com/sharer/sharer.php?u=http://www.lanacion.com.ar/elecciones-2015-t50499"
+
 });
