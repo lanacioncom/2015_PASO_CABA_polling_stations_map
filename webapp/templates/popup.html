@@ -1,3 +1,3 @@
 <!--JET: Tooltip when one polling station is selected-->
 <div class="ttip_header"><%- establecimiento.nombre %></div>
-<div class="ttip_body">El partido <%- dict_partidos[establecimiento.id_partido].nombre_partido %> ha ganado por un margen de <%= ((establecimiento.margin_victory / establecimiento.positivos) * 100).format(1, ",", '.') %>% al partido <%- dict_partidos[v.rows[1].id_partido].nombre_partido %></div>
+<div class="ttip_body">El partido <%- dict_partidos[establecimiento.id_partido].nombre_partido %> ha ganado por un margen de <span> <%= ((establecimiento.margin_victory / establecimiento.positivos) * 100).format(1, ",", '.') %>% </span>al partido <%- dict_partidos[v.rows[1].id_partido].nombre_partido %></div>

@@ -252,7 +252,7 @@ header div.compartir a.btn{
   height: 27px;
   float: right;
   margin-left: 2px;
-  margin-top: 5px;
+  margin-top: 53px;
   background-repeat: no-repeat;
   background-image:url(../img/compartir.png); 
   -webkit-transition: background-position .2s;
@@ -627,7 +627,7 @@ div.loader{
 
 
 .porc_text div.porc_partido {
-  font-size: 15px;
+  font-size: 14px;
     color: #000;
    /*float: left;*/
 
@@ -759,7 +759,7 @@ div.creVent{
 div.creVent div.titu{
   width: 98%;
   padding: 10px;
-    padding-bottom: 3px;
+  padding-bottom: 3px;
   color:#000;
   font-family: "TheSansBold";
   background-color:#fff;
@@ -824,6 +824,16 @@ div.creVent div.txts div.nombre a:hover{
   color:#29ABE2;
 }
 
+.atribuciones {
+  font-size: 10px;
+  padding-top: 25px;
+  padding-left: 25%;
+  float: left;
+}
+
+.atribuciones2 {
+	float:right;
+}	
 
 @media (max-width: 850px) {
 
@@ -850,9 +860,23 @@ div.creVent div.txts div.nombre a:hover{
 
 /*Tooltip styles*/
 div.ttip_header {
+	width: 150px;
+	font-size:13px;
+	font-weight: bold;
+	padding-bottom: 5px;
+	line-height:14px;
 
 }
 
 div.ttip_body {
+	width: 150px;
+	font-size:13px;
+	line-height:14px;
+	color:#444444;
+}
 
+div.ttip_body span {
+	color:#000000;
+	font-weight:bold;
+	line-height:14px;
 }
