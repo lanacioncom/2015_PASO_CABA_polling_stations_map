@@ -160,10 +160,10 @@ header {
 }
 
 div.titulos {
-  /*width: 320px;*/
+  width: 80%;
   font-size: 15px;
   overflow: hidden;
-  /*float: left;*/
+  float: left;
 }
 
 h1 {
@@ -194,6 +194,22 @@ h2 {
   text-transform: uppercase;
 }
 
+.titulo {
+	font-size: 30px;
+	border-bottom: none;
+	padding-bottom:5px;
+}
+
+.titulos p {
+	padding-bottom:5px;
+	color:#999999;
+}
+
+.titulos span {
+	font-weight: bold;
+	color:#000000;
+	
+}
 
 /*/////////////////// REFERENCIAS ///////////////////////////*/
 
