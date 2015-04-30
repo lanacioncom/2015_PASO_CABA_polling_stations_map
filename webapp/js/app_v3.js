@@ -13,7 +13,7 @@ requirejs.config({
     }
 });
 var p_link;
-requirejs(['cartodb','app/config_v2','app/state_v2', 'app/templates_v2'],
+requirejs(['cartodb','app/config_v2','app/state_v2', 'app/templates_v3'],
 function(dummy, config, state, templates) {
   $(function() {
     "use strict";
@@ -212,8 +212,10 @@ function(dummy, config, state, templates) {
                     var position = JSON.parse(data.rows[0].g)['coordinates'];
                     var latlng = L.latLng(position[1], position[0]);
                     var d = data.rows[0];
-                    featureClick(null, latlng, state.map.latLngToLayerPoint(latlng), d, 0);
                     state.map.setView(latlng, 14);
+                    featureClick(null, latlng, state.map.latLngToLayerPoint(latlng), d, 0);
+                    //state.map.setView(latlng, 14);
+                    
             });
         }
         
