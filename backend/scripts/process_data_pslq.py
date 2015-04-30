@@ -51,7 +51,7 @@ SPECIAL_PARTIES = {
 
 def connect_dataset():
     '''DB connection setup'''
-    return dataset.connect('postgresql://jjelosua@localhost:5432/pasocaba2015_loc')
+    return dataset.connect('postgresql://jjelosua@localhost:5432/pasocaba2015_loc2')
 
 
 def clearDB():
@@ -367,7 +367,7 @@ def make_cache_table_loc(table_polling='locales_loc',
         ORDER BY id_agrupado, rank)
         SELECT l.id_agrupado as id_establecimiento,
                l.id_distrito, l.id_seccion,
-               l.direccion, l.nombre,
+               l.direccion, l.nombre, l.geom,
                c.total as electores,
                t.positivos, sqrt(t.positivos) as sqrt_positivos,
                (t.validos + t.invalidos) as votantes,
