@@ -205,9 +205,17 @@ function(dummy, config, state, templates) {
               .on('featureOut', featureOut)
               .on('featureClick', featureClick);
         
-        /*if(check_location()){ // chequea si has est selecto
+        if(check_location()){
             var id_establecimiento = check_location().replace("#", "");
-        }*/
+            config.sql.execute(templates.permalink_sql,{id_establecimiento: id_establecimiento})
+                .done(function(data) {
+                    var position = JSON.parse(data.rows[0].g)['coordinates'];
+                    var latlng = L.latLng(position[1], position[0]);
+                    var d = data.rows[0];
+                    featureClick(null, latlng, state.map.latLngToLayerPoint(latlng), d, 0);
+                    state.map.setView(latlng, 14);
+            });
+        }
         
       });
   });
