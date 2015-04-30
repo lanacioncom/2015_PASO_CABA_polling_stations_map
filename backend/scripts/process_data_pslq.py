@@ -161,7 +161,7 @@ def create_locales_loc(table_polling='locales_tmp'):
         FROM %s as t1
         LEFT OUTER JOIN %s as t2
         ON t1.id_agrupado = t2.id_agrupado
-        AND t1.id < t2.id
+        AND t1.id > t2.id
         WHERE t2.id_agrupado IS NULL;
         ''' % (table_polling,
                table_polling)
