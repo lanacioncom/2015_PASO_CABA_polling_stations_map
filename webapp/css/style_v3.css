@@ -880,3 +880,8 @@ div.ttip_body span {
 	font-weight:bold;
 	line-height:14px;
 }
+
+span#aclaracion {
+  margin-top: 10px;
+  font-weight: bold;
+}
