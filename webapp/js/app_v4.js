@@ -191,9 +191,8 @@ function(dummy, config, state, templates) {
              sql: config.LAYER_SQL,
              //JET: Use the cartocss underscore template and pass it to the layer
              cartocss: CARTOCSS_TMPL({ colores: config.PARTIDOS_COLORES }),
-             interactivity: 'id_establecimiento,nombre,direccion,id_distrito,id_seccion, \
-                            circuito,mesa_desde, mesa_hasta, electores, \
-                            votantes, positivos, id_partido, votos, \
+             interactivity: 'id_establecimiento, nombre, direccion,  id_distrito, id_seccion, \
+                            electores, votantes, positivos, id_partido, votos, \
                             margin_victory, sqrt_positivos',
          }]
      })
