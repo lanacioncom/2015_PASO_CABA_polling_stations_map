@@ -1,27 +1,22 @@
-	<a class="cerrar" href="#" onclick="close_slide(); return false;">x</a>
-	<div id="x_fuerza">
-		<div class="porc_text">
-			<div style="margin-bottom: 0px" class="porc_partido"><b>{{e.nombre}} </b></div>
-			<div style="margin-bottom: 5px" class="porc_partido">{{e.direccion}}</div>
-		</div>
-		<ul id="list">
-			{{#each data}}			
-				{{!--
-				<li class="{{chekIsLessThan15}}">
-				--}}
-				<li>
-					<h5 
-						style="padding-left:1.8%;">{{get_partido}} <span>{{toFixed_n_0 votos}} votos</span>
-					</h5>
-					<div class="cont_barra">
-						<div class="barra" data-width="{{get_width_bar pct ../max}}%" style="width:0; background: {{get_partido_color}}">
-							<div class="porc">{{toFixed_n pct}}%</div>
-						</div>
-					</div>
-				</li>
-
-			{{/each}}
-			
-		</ul>
-		<div style="margin-top: 5px" class="porc_partido"><b>Participación: </b>{{e.votantes }} votantes ({{division e}}% del total de electores)</div>
-	</div>
+<a class="cerrar">x</a>
+<div id="x_fuerza">
+    <div class="porc_text">
+        <div style="margin-bottom: 0px" class="porc_partido"><b><%- e.nombre %> </b></div>
+        <div style="margin-bottom: 5px" class="porc_partido"><%- e.direccion %></div>
+    </div>
+    <ul id="list">
+        <% _.each(data, function(d) { %>
+            <li>
+                <h5 style="padding-left:1.8%;"><%=vh.get_partido_nombre(d,dict_partidos)%>
+                    <span><%=vh.get_formatted_num(d.votos,0)%> votos</span>
+                </h5>
+                <div class="cont_barra">
+                    <div class="barra" data-width="<%=vh.get_formatted_pct(d.votos,max.votos,1,'.')%>%" style="width:0; background: <%= vh.get_partido_color(d,dict_partidos)%>">
+                        <div class="porc"><%=vh.get_formatted_num(d.pct,1)%>%</div>
+                    </div>
+                </div>
+            </li>
+        <% }); %>
+    </ul>
+    <div style="margin-top: 5px" class="porc_partido"><b>Participación: </b><%=vh.get_formatted_num(e.votantes,0)%> votantes (<%= vh.get_formatted_pct(e.votantes,e.electores,1)%>% del total de electores)</div>
+</div>

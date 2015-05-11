@@ -1,6 +1,3 @@
-node_modules
 .project
 .pydevproject
-r.js
-app.build.js
 build/
