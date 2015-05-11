@@ -10,6 +10,7 @@ REL_RESULTS_PATH = os.path.join(dir, '../data/resultados')
 POLLING_STATIONS_DATA_FILE = 'caba_est_2015.csv'
 POLLING_TABLES_DATA_FILE = 'mesas.csv'
 RESULTS_DATA_FILE = 'resultados_partido_lista.csv'
+RELATIONS_DATA_FILE = 'relaciones.csv'
 
 
 SCHEMA_POLLING_STATION_NUMERIC = {
@@ -35,6 +36,11 @@ SCHEMA_RESULTS_NUMERIC = {
     "JEF": "votos"
 }
 
+SCHEMA_RELATION_NUMERIC = {
+    "id_establecimiento": "id_establecimiento",
+    "id_agrupado": "id_agrupado"
+}
+
 SPECIAL_PARTIES = {
     "BLC": 0,
     "NUL": 1,
@@ -45,7 +51,7 @@ SPECIAL_PARTIES = {
 
 def connect_dataset():
     '''DB connection setup'''
-    return dataset.connect('postgresql://jjelosua@localhost:5432/pasocaba2015')
+    return dataset.connect('postgresql://jjelosua@localhost:5432/pasocaba2015_loc2')
 
 
 def clearDB():
@@ -113,6 +119,55 @@ def import_results(fname):
                 t_results[k] = v.decode('utf-8')
         results.append(t_results)
     t.insert_many(results, chunk_size=10000)
+
+
+def import_relations(fname):
+    ''' import relations to fix polling stations CSV '''
+    t = db['relaciones']
+    f = open(fname, 'r')
+    fields = f.readline().strip().split(',')
+    c = csv.DictReader(f, fields)
+    results = []
+    for row in c:
+        t_results = {}
+        for k, v in row.iteritems():
+            if k in SCHEMA_RELATION_NUMERIC.keys():
+                kt = SCHEMA_RELATION_NUMERIC[k]
+                t_results[kt] = int(v) if v else None
+            if k not in SCHEMA_RELATION_NUMERIC.keys():
+                t_results[k] = v.decode('utf-8')
+        results.append(t_results)
+    t.insert_many(results, chunk_size=10000)
+
+
+def create_locales_tmp(table_polling='locales',
+                       table_rel='relaciones'):
+    '''create temp table'''
+    q = '''
+        SELECT l.*, r.id_agrupado
+            FROM %s l, %s r
+            WHERE l.id = r.id_establecimiento
+        ''' % (table_polling,
+               table_rel)
+    results = db.query(q)
+    locales_tmp_table = db['locales_tmp']
+    locales_tmp_table.insert_many(results)
+
+
+def create_locales_loc(table_polling='locales_tmp'):
+    '''create polling stations by location'''
+    q = '''
+        SELECT t1.*
+        FROM %s as t1
+        LEFT OUTER JOIN %s as t2
+        ON t1.id_agrupado = t2.id_agrupado
+        AND t1.id > t2.id
+        WHERE t2.id_agrupado IS NULL;
+        ''' % (table_polling,
+               table_polling)
+    results = db.query(q)
+    locales_loc_table = db['locales_loc']
+    locales_loc_table.insert_many(results)
 
 
 def aggregate_results_by_poll_station(table_polling='locales',
@@ -199,6 +254,69 @@ def aggregate_totals_by_poll_station(table_votes='votos_establecimiento'):
     votos_est.insert_many(tmp)
 
 
+def aggregate_results_by_location(table_votes='votos_establecimiento',
+                                table_rel='relaciones'):
+    '''Aggregate by location to fix duplicates'''
+    tmp = []
+    q = '''
+        SELECT a.id_agrupado, v.id_partido,
+        sum(v.votos) as votos
+        FROM %s as v, %s as a
+        WHERE v.id_establecimiento = a.id_establecimiento
+        GROUP BY a.id_agrupado, v.id_partido, v.id_distrito, v.id_seccion
+        ''' % (table_votes, table_rel)
+
+    for p in db.query(q):
+        p['id_agrupado'] = int(p['id_agrupado'])
+        p['votos'] = int(p['votos'])
+        tmp.append(p)
+    votos_loc = db['votos_loc']
+    votos_loc.insert_many(tmp)
+
+
+def aggregate_totals_by_location(table_totals='totales_establecimiento',
+                                 table_rel='relaciones'):
+    '''Aggregate by location to fix duplicates'''
+    tmp = []
+    q = '''
+        SELECT a.id_agrupado, sum(t.blancos) as blancos,
+        sum(t.validos) as validos, sum(t.invalidos) as invalidos,
+        sum(t.positivos) as positivos
+        FROM %s as t, %s as a
+        WHERE t.id_establecimiento = a.id_establecimiento
+        GROUP BY a.id_agrupado
+        ''' % (table_totals, table_rel)
+
+    for p in db.query(q):
+        p['id_agrupado'] = int(p['id_agrupado'])
+        p['blancos'] = int(p['blancos'])
+        p['validos'] = int(p['validos'])
+        p['invalidos'] = int(p['invalidos'])
+        p['positivos'] = int(p['positivos'])
+        tmp.append(p)
+    totales_loc = db['totales_loc']
+    totales_loc.insert_many(tmp)
+
+
+def aggregate_census_by_location(table_census='censo_establecimiento',
+                                 table_rel='relaciones'):
+    '''Aggregate by location to fix duplicates'''
+    tmp = []
+    q = '''
+        SELECT a.id_agrupado, sum(c.total) as total
+        FROM %s as c, %s as a
+        WHERE c.id_establecimiento = a.id_establecimiento
+        GROUP BY a.id_agrupado
+        ''' % (table_census, table_rel)
+
+    for p in db.query(q):
+        p['id_agrupado'] = int(p['id_agrupado'])
+        p['total'] = int(p['total'])
+        tmp.append(p)
+    censo_loc = db['censo_loc']
+    censo_loc.insert_many(tmp)
+
+
 def make_cache_table(table_polling='locales',
                      table_votes='votos_establecimiento',
                      table_census='censo_establecimiento',
@@ -235,6 +353,40 @@ def make_cache_table(table_polling='locales',
     cache_table = db['cache_votos_paso_2015']
     cache_table.insert_many(results)
 
+def make_cache_table_loc(table_polling='locales_loc',
+                     table_votes='votos_loc',
+                     table_census='censo_loc',
+                     table_totals='totales_loc'):
+    q = '''
+        WITH %(winner)s AS (SELECT id_agrupado, id_partido, votos,
+        row_number() over(partition by id_agrupado
+                          ORDER BY votos DESC) as rank,
+        (votos - lead(votos,1,0) over(partition by id_agrupado
+                                     ORDER BY votos DESC)) as margin_victory
+        FROM %(table_votes)s
+        ORDER BY id_agrupado, rank)
+        SELECT l.id_agrupado as id_establecimiento,
+               l.id_distrito, l.id_seccion,
+               l.direccion, l.nombre, l.geom,
+               c.total as electores,
+               t.positivos, sqrt(t.positivos) as sqrt_positivos,
+               (t.validos + t.invalidos) as votantes,
+               w.id_partido, w.votos, w.margin_victory
+        FROM %(table_polling)s l
+        INNER JOIN %(winner)s w ON l.id_agrupado = w.id_agrupado
+        INNER JOIN %(table_census)s c ON l.id_agrupado = c.id_agrupado
+        INNER JOIN %(table_totals)s t ON l.id_agrupado = t.id_agrupado
+        AND w.rank = 1;
+        ''' % {'table_polling': table_polling,
+               'table_votes': table_votes,
+               'table_census': table_census,
+               'table_totals': table_totals,
+               'winner': 'winner'}
+
+    results = db.query(q)
+    cache_table = db['cache_votos_paso_2015_loc']
+    cache_table.insert_many(results)
+
 
 def process_CABA():
     print "clear DB"
@@ -251,20 +403,39 @@ def process_CABA():
     import_results('%s/%s'
                    % (REL_RESULTS_PATH, RESULTS_DATA_FILE))
 
+    print "import relations"
+    import_relations('%s/%s'
+                     % (REL_POLLING_PATH, RELATIONS_DATA_FILE))
+
+    print "create polling stations tmp"
+    create_locales_tmp()
+
+    print "create polling stations assigned to location"
+    create_locales_loc()
+
     print "aggregate census data by polling station"
-    aggregate_census_by_poll_station('locales', 'mesas')
+    aggregate_census_by_poll_station()
 
     print "aggregate results by polling station and party"
-    aggregate_results_by_poll_station('locales', 'resultados')
+    aggregate_results_by_poll_station()
 
     print "aggregate totals by polling station"
-    aggregate_totals_by_poll_station('votos_establecimiento')
+    aggregate_totals_by_poll_station()
+
+    print "aggregate census data by location"
+    aggregate_census_by_location()
+
+    print "aggregate results by location"
+    aggregate_results_by_location()
+
+    print "aggregate totals by location"
+    aggregate_totals_by_location()
 
     print "create unnormalized table for cartodb performance"
-    make_cache_table('locales',
-                     'votos_establecimiento',
-                     'censo_establecimiento',
-                     'totales_establecimiento')
+    make_cache_table()
+
+    print "create unnormalized table for cartodb performance by location"
+    make_cache_table_loc()
 
 
 if __name__ == "__main__":

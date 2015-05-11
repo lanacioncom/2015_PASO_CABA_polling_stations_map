@@ -22,9 +22,9 @@ define({
     CARTODB_USER: 'lndata',
     sql: null,
     //JET: Cartodb SQL template
-    LAYER_SQL: "SELECT * FROM cache_votos_paso_2015 order by (margin_victory / sqrt_positivos) desc",
+    LAYER_SQL: "SELECT * FROM cache_votos_paso_2015_loc order by (margin_victory / sqrt_positivos) desc",
     ESTABLECIMIENTOS_SQL_TMPL: "SELECT *, st_asgeojson(the_geom) as g \n \
-                                 FROM cache_votos_paso_2015 \n \
+                                 FROM cache_votos_paso_2015_loc \n \
                                  WHERE id_distrito = {{id_distrito}} \n \
                                  AND id_seccion = {{id_seccion}} \n \
                                  ORDER BY circuito, nombre",
