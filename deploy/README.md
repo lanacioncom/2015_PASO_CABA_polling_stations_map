@@ -4,21 +4,6 @@ Deployment usage
 ## Requirements
 * Have [_nodejs_](https://nodejs.org/) installed
 
-## Development server && testing
-1. Go to the deploy folder
-
-        $ cd deploy
-
-2. Install dependencies
-
-        $ npm install
-
-3. Run local server
-
-        $ gulp server
-
-4. Open a browser on **http://localhost:8080** and check that everything looks fine
-
 ## Production deployment process
 1. Go to the deploy folder
 
