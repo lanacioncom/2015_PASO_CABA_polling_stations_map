@@ -12,5 +12,5 @@ define(['text!templates/credits.html',
             cartocss: cartocss,
             feature_click_sql: feature_click_sql,
             permalink_sql: permalink_sql
-        }
+        };
 });

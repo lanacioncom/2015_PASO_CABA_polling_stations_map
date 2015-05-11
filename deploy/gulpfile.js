@@ -37,7 +37,7 @@ gulp.task('roptimize', function() {
         name: "app",
         optimizeAllPluginResources: true,
         removeCombined: true,
-        out: 'app-opt.js',
+        out: 'app-opt.js'
     })
     .pipe(gulp.dest('../webapp/js'));
 });
