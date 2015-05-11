@@ -29,8 +29,6 @@ function(config, state, templates, helpers, view_helpers) {
         config.alto = $(window).height();
     });
 
-    $
-
     state.map = L.map('mapa_cont', {
         center: [-34.61597432902992, -58.442115783691406],
         zoom: 12,
@@ -78,7 +76,7 @@ function(config, state, templates, helpers, view_helpers) {
     });
 
     //JET: credits
-    $('.creVent').html(_.template(templates.credits))
+    $('.creVent').html(_.template(templates.credits));
 
     //JET: hide overlay by shifting to the left with animation
     var hideOverlay = function() {
@@ -154,7 +152,7 @@ function(config, state, templates, helpers, view_helpers) {
             helpers.animate_barras();
         });
 
-        location.hash = establecimiento_data.id_establecimiento
+        location.hash = establecimiento_data.id_establecimiento;
     };
 
     //JET: 
