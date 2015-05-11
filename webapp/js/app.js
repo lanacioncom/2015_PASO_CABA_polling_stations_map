@@ -110,7 +110,7 @@ function(config, state, templates, helpers, view_helpers) {
     //JET: Close pop up and political party viz
     state.map.on('popupclose', function() {
         if (state.featureClicked) state.featureClicked = false;
-        close_slide();
+        helpers.close_slide();
     });
 
     //JET: if we are over a polling station change cursor to pointer
