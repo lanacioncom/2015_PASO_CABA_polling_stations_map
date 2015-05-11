@@ -5,6 +5,7 @@ import dataset
 import csvkit
 #import simplejson
 import io, json
+from default_settings import DB_DISTRICTS_URL
 
 OUTPUT_DIR = 'comunas'
 
@@ -46,6 +47,6 @@ def run():
 
 if __name__ == '__main__':
     # connecting to a PostgreSQL database
-    db = dataset.connect('postgresql://jjelosua@localhost:5432/CABA_2015')
+    db = dataset.connect(DB_DISTRICTS_URL)
     run()
 
