@@ -2,6 +2,7 @@
 import dataset
 import csv
 import os
+from default_settings import DATABASE_URL, DEBUG
 
 db = None
 dir = os.path.dirname(__file__)
@@ -51,7 +52,8 @@ SPECIAL_PARTIES = {
 
 def connect_dataset():
     '''DB connection setup'''
-    return dataset.connect('postgresql://jjelosua@localhost:5432/pasocaba2015_loc2')
+    return dataset.connect(DATABASE_URL)
+    #return dataset.connect('postgresql://jjelosua@localhost:5432/pasocaba2015_loc2')
 
 
 def clearDB():

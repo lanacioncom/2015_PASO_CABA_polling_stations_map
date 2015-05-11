@@ -2,7 +2,7 @@ Backend usage
 =============
 
 ## Requirements
-* Have postgreSQL installed locally
+* Have postgreSQL 9.x installed locally
 * Python 2.7.\* && virtualenv && pip installed 
 
 ## Process
@@ -22,7 +22,7 @@ Backend usage
 
         $ createdb db_name
 
-5. Duplicate the example settings file and update with your DB configuration
+5. Create DATABASE_URL environment variable to connect to the DB created in the previous step or change the default value inside default_settings.py
 
 6. Run the script to process and load the DB tables
 
