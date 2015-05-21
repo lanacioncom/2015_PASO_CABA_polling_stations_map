@@ -28,14 +28,14 @@ Since _underscore_ comes bundled inside the _cartodbjs_ library we have used it 
 
 Usage info: [here](webapp/README.md)
 
-## Deploy
+## Server
 We are using _npm_ and _gulp_ to automate the optimization and deployment process.
 
 The deployment takes care of minimizing, uglifying and versioning the static files so that it plays nice with the newsroom http cache configuration.
 
 We have used the [_gulp-requirejs_](https://www.npmjs.com/package/gulp-requirejs) node package to integrate the requirejs optimization in our gulp deployment process.
 
-Usage info: [here](deploy/README.md)
+Usage info: [here](server/README.md)
 
 
 ## Technologies && Libraries
